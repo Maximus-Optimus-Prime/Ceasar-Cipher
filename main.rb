@@ -27,6 +27,20 @@ def substrings(string, array)
   res
 end
 
+def stock_picker(array)
+  day_max = 0
+  day_min = 0
+  profit = 0
+  array.each_with_index do |value, index|
+    max, day_max_local = array[index..-1].each_with_index.max_by {|value, index| value}
+    if (max - value > profit)
+      day_min, day_max = [index, day_max_local + index]
+      profit = max - value
+    end
+  end
+  return [day_min, day_max]
+end
+
 ### TEST ###
 
 def test_ceasar_cipher
@@ -47,6 +61,12 @@ def test_substrings
   puts substrings(string, dictionary)
 end
 
+def test_stock_picker
+  array = [17,3,6,9,15,8,6,1,10]
+  print array; puts
+  print stock_picker(array); puts
+end
+
 ### MAIN ###
 
-test_substrings
+test_stock_picker
